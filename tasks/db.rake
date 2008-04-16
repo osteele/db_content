@@ -2,7 +2,8 @@ require File.join(File.dirname(__FILE__), '../lib/connection_content')
 
 namespace :db do
   namespace :content do
-    DEFAULT_DB_DUMP_NAME = File.join(RAILS_ROOT, 'db', 'content.sql.gz')
+    DEFAULT_DB_DUMP_NAME = File.join(RAILS_ROOT, 'db',
+                                     "#{RAILS_ENV}-content.sql.gz")
     
     desc "Dump the database to FILE or #{DEFAULT_DB_DUMP_NAME}"
     task :dump => :environment do

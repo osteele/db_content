@@ -1,6 +1,6 @@
-= DB_Content Plugin
+= DB Content Plugin
 
-The DB_Content plugin for Rails adds tasks to save and restore
+The DB Content plugin for Rails adds tasks to save and restore
 database content.  It currently works only with the Mysql adaptor, and
 only on unix (e.g.  Linux and MacOS); see lib/connection_content for
 how to add support for other databases.
@@ -9,14 +9,15 @@ how to add support for other databases.
     Save a timestamped database to db/archive/#{timestamp}.sql.gz
 
   rake db:content:dump
-    Dump the database to FILE or db/content.sql.gz
+    Dump the database to FILE or db/#{RAILS_ENV}_content.sql.gz
 
   rake db:content:load
-    Load the database from FILE or db/content.sql.gz
+    Load the database from FILE or db/#{RAILS_ENV}_content.sql.gz,
+    and migrate it to the current schema version.
 
 The file is piped through zip or unzip if its name ends in '.gz'.
 
 
 == License
 
-Copyright (c) 2006 by Oliver Steele.  Released under the MIT license.
+Copyright (c) 2006-2008 by Oliver Steele.  Released under the MIT license.

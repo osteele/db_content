@@ -1,4 +1,5 @@
 require 'activerecord'
+require 'rake'
 
 module ActiveRecord
   module ConnectionAdapters
@@ -12,31 +13,38 @@ module ActiveRecord
       end
     end
     
-    class AbstractAdapter
+    class MysqlAdapter < AbstractAdapter
       def dump_content_to(fname)
-        zipper = '| gzip' if fname =~ /\.gz$/
-        sh "mysqldump --add-drop-table --add-locks -K -e #{mysql_params} #{zipper} > #{fname}"
+        sh dump_content_to_cmd(fname)
       end
       
       def load_content_from(fname)
-        if fname =~ /\.gz$/
-          sh "gunzip < #{fname} | mysql #{mysql_params}"
-        else
-          sh "mysql #{mysql_params} < #{fname}"
-        end
+        sh load_content_from_cmd(fname)
       end
       
       private
+      def dump_content_to_cmd(fname)
+        zipper = '| gzip' if fname =~ /\.gz$/
+        "mysqldump --add-drop-table --add-locks -K -e #{mysql_params} #{zipper} > #{fname}"
+      end
+      
+      def load_content_from_cmd(fname)
+        if fname =~ /\.gz$/
+          "gunzip < #{fname} | mysql #{mysql_params}"
+        else
+          "mysql #{mysql_params} < #{fname}"
+        end
+      end
+      
       def mysql_params
         config = ActiveRecord::Base.configurations[RAILS_ENV]
-        raise "mysql adapter required" unless config['adapter'] == 'mysql'
         options = {
           :host => "-h",
           :username => "-u",
           :password => "-p",
           :database => nil
         }.map { |key, option|
-          value = config[key.to_s]
+          value = config[key] || config[key.to_s]
           "#{option}#{value}" if value
         }.join(' ')
       end
