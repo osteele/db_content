@@ -6,16 +6,16 @@ only on unix (e.g.  Linux and MacOS); see lib/connection_content for
 how to add support for other databases.
 
   rake db:content:archive
-    Save a timestamped database to db/archive/#{timestamp}.sql.gz
+    Saves a timestamped database to db/archive/#{timestamp}.sql.gz
 
   rake db:content:dump
-    Dump the database to FILE or db/#{RAILS_ENV}_content.sql.gz
+    Dumps the database to FILE or db/#{RAILS_ENV}-content.sql.gz.  If
+    FILE ends in .gz, the file is compressed.
 
   rake db:content:load
-    Load the database from FILE or db/#{RAILS_ENV}_content.sql.gz,
-    and migrate it to the current schema version.
-
-The file is piped through zip or unzip if its name ends in '.gz'.
+    Loads the database from FILE or db/#{RAILS_ENV}-content.sql.gz,
+    and migrates it to the current schema version.  If FILE ends
+    in.gz, the file is piped through gunzip.
 
 
 == License
