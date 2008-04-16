@@ -15,6 +15,7 @@ namespace :db do
     task :load => :environment do
       fname = ENV['FILE'] || DEFAULT_DB_DUMP_NAME
       ActiveRecord::Base.connection.load_content_from fname
+      Rake::Task['db:migrate'].invoke
     end
     
     desc "Save a timestamped database to RAILS_ROOT/db/archive"
