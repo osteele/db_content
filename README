@@ -46,7 +46,7 @@ file is piped through gunzip.
 == Installation
 
 To install from the top level of a Rails application:
-  git clone git://github.com/osteele/javascript_fu.git vendor/plugins/db_content
+  git clone git://github.com/osteele/db_content.git vendor/plugins/db_content
 
 If you're running off Edge Rails (or, presumably, Rails > 2.0.2), you
 should be able to do this instead:
